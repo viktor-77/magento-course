@@ -4,8 +4,14 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="blog_details_listing_data_source" xsi:type="string">
+                <item name="blog_grid_listing_data_source" xsi:type="string">
                     Tsg\Blog\Model\ResourceModel\Order\Grid\Collection
+                </item>
+                <item name="blog_tag_listing_data_source" xsi:type="string">
+                    Tsg\Blog\Model\ResourceModel\Order\Grid\TagCollection
+                </item>
+                <item name="blog_category_listing_data_source" xsi:type="string">
+                    Tsg\Blog\Model\ResourceModel\Order\Grid\CategoryCollection
                 </item>
             </argument>
         </arguments>
@@ -17,20 +23,17 @@
             <argument name="resourceModel" xsi:type="string">Tsg\Blog\Model\ResourceModel\Order</argument>
         </arguments>
     </virtualType>
-
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="blog_tag_listing_data_source" xsi:type="string">
-                    Tsg\Blog\Model\ResourceModel\Order\Grid\Collection
-                </item>
-            </argument>
-        </arguments>
-    </type>
-    <virtualType name="Tsg\Blog\Model\ResourceModel\Order\Grid\Collection"
+    <virtualType name="Tsg\Blog\Model\ResourceModel\Order\Grid\TagCollection"
                  type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">blog_tag</argument>
+            <argument name="resourceModel" xsi:type="string">Tsg\Blog\Model\ResourceModel\Order</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Tsg\Blog\Model\ResourceModel\Order\Grid\CategoryCollection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">blog_category</argument>
             <argument name="resourceModel" xsi:type="string">Tsg\Blog\Model\ResourceModel\Order</argument>
         </arguments>
     </virtualType>

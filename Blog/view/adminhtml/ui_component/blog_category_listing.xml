@@ -3,9 +3,9 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">
-                blog_tag_listing.blog_tag_listing_data_source
+                blog_category_listing.blog_category_listing_data_source
             </item>
-            <item name="deps" xsi:type="string">blog_tag_listing.blog_tag_listing_data_source
+            <item name="deps" xsi:type="string">blog_category_listing.blog_category_listing_data_source
             </item>
         </item>
         <item name="spinner" xsi:type="string">spinner_columns</item>
@@ -41,7 +41,7 @@
             <argument name="class" xsi:type="string">
                 Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
             </argument>
-            <argument name="name" xsi:type="string">blog_tag_listing_data_source</argument>
+            <argument name="name" xsi:type="string">blog_category_listing_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
@@ -65,12 +65,12 @@
                 </item>
             </argument>
         </selectionsColumn>
-        <column name="tag">
+        <column name="category">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">textRange</item>
                     <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">tag</item>
+                    <item name="label" xsi:type="string" translate="true">category</item>
                 </item>
             </argument>
         </column>
