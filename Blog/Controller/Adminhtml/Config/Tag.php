@@ -9,9 +9,9 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-class Details extends \Magento\Backend\App\Action
+class Tag extends \Magento\Backend\App\Action
 {
-    private const PAGE_TITLE = 'Blog details creating';
+    private const PAGE_TITLE = 'Blog tags';
 
     private PageFactory $pageFactory;
     private Context $context;
