@@ -11,31 +11,19 @@ class BlogCategory extends \Magento\Framework\Model\AbstractModel implements Blo
      */
     protected function _construct()
     {
-        $this->_init(\Tsg\Blog\Model\ResourceModel\Blog::class);
+        $this->_init(\Tsg\Blog\Model\ResourceModel\BlogCategory::class);
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getCategory()
     {
-        return $this->getData(self::ID);
+        $this->getData(self::CATEGORY);
+        return $this;
+
     }
 
-    /**
-     * @return string
-     */
-    public function getTag(): string
+    public function setCategory(string $category)
     {
-        return $this->getData(self::TAG);
-    }
-
-    /**
-     * @param string $tag
-     * @return BlogCategoryInterface
-     */
-    public function setTag(string $tag): BlogCategoryInterface
-    {
-        return $this->setData(self::TAG, $tag);
+        $this->setData(self::CATEGORY, $category);
+        return $this;
     }
 }

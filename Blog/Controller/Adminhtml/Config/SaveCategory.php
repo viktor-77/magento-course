@@ -16,7 +16,8 @@ class SaveCategory extends Action
         Context                $context,
         RedirectFactory        $resultRedirectFactory,
         BlogCategoryRepository $blogCategoryRepository
-    ) {
+    )
+    {
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->blogCategoryRepository = $blogCategoryRepository;
         parent::__construct($context);
@@ -25,8 +26,8 @@ class SaveCategory extends Action
     public function execute()
     {
         $categoryData = $this->getRequest()->getPostValue();
-        $this->blogCategoryRepository->saveNewTag($categoryData);
+        $this->blogCategoryRepository->addCategory($categoryData);
 
-        return $this->resultRedirectFactory->create()->setPath('blog/config/save_category');
+        return $this->resultRedirectFactory->create()->setPath('blog/config/category');
     }
 }

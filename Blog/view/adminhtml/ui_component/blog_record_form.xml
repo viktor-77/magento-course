@@ -16,7 +16,7 @@
             <item name="save" xsi:type="string">Tsg\BestPrice\Block\Adminhtml\Button\SaveParameters</item>
         </item>
     </argument>
-    <dataSource name="blog_tag_form_data_source">
+    <dataSource name="blog_record_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Tsg\Blog\Model\DataProvider</argument>
             <argument name="name" xsi:type="string">blog_record_form_data_source</argument>
@@ -24,7 +24,7 @@
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="*/*/saveconfig"/>
+                    <item name="submit_url" xsi:type="url" path="blog/config/saverecord"/>
                 </item>
             </argument>
         </argument>

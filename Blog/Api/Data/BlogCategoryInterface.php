@@ -9,22 +9,16 @@ namespace Tsg\Blog\Api\Data;
  */
 interface BlogCategoryInterface
 {
-    const ID = 'id';
-    const TAG = 'tag';
+    const CATEGORY = 'category';
 
     /**
-     * @return int
+     * @return $this
      */
-    public function getId(): int;
+    public function getCategory();
 
     /**
-     * @return string
+     * @param string $category
+     * @return $this
      */
-    public function getTag(): string;
-
-    /**
-     * @param string $tag
-     * @return self
-     */
-    public function setTag(string $tag): self;
+    public function setCategory(string $category);
 }

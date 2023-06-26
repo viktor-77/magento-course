@@ -2,10 +2,11 @@
 
 namespace Tsg\Blog\Model;
 
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Tsg\Blog\Api\BlogCategoryRepositoryInterface;
+use Tsg\Blog\Api\Data\BlogCategoryInterface;
 use Tsg\Blog\Model\ResourceModel\BlogCategory as categoryResourceModel;
-use Tsg\Blog\Model\BlogCategory;
 
 class BlogCategoryRepository implements BlogCategoryRepositoryInterface
 {
@@ -18,23 +19,28 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
         $this->categoryResourceModel = $categoryResourceModel;
     }
 
-    public function getTagById(int $id)
+    public function getCategoryByName(string $category): BlogCategoryInterface
     {
-        $category = $this->BlogCategoryFactory->create();
-        $this->categoryResourceModel->load($category, $id);
+        $categoryModel = $this->BlogCategoryFactory->create();
+        $this->categoryResourceModel->load($categoryModel, $category);
 
-        if (!$category->getId()) {
-            throw new NoSuchEntityException(__("The Category with ID = $id doesn't exist"));
+        if (!$categoryModel->getCategory()) {
+            throw new NoSuchEntityException(__("The Category with category = $category doesn't exist"));
         }
 
         return $category;
     }
 
-    public function saveNewTag(BlogCategoryInterface $tag)
+    public function addCategory($category): BlogCategoryInterface
     {
-    }
+        try {
+            $categoryData = $this->blogCategoryFactory->create();
+            $categoryData->setData($category);
+            $this->categoryResourceModel->save($categoryData);
+        } catch (\Exception $e) {
+            throw new CouldNotSaveException(__('Could not save the category: %1', $e->getMessage()), $e);
+        }
 
-//    public function deleteTagById(BlogCategoryInterface $tag): bool
-//    {
-//    }
+        return $categoryData;
+    }
 }

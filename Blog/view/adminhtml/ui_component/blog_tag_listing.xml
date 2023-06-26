@@ -16,9 +16,6 @@
                 <item name="sticky" xsi:type="boolean">true</item>
             </item>
         </argument>
-        <!--        <columnsControls name="columns_controls"/>-->
-        <!--        <filters name="listing_filters"/>-->
-        <!--        <filterSearch name="fulltext"/>-->
         <massaction name="listing_massaction">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -30,7 +27,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">delete</item>
                         <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="blog/blog/delete"/>
+                        <item name="url" xsi:type="url" path="blog/config/deleteTag"/>
                     </item>
                 </argument>
             </action>
