@@ -37,4 +37,7 @@
             <argument name="resourceModel" xsi:type="string">Tsg\Blog\Model\ResourceModel\Order</argument>
         </arguments>
     </virtualType>
+
+    <preference for="Tsg\Blog\Api\Data\BlogCategoryInterface" type="Tsg\Blog\Model\BlogCategory"/>
+    <preference for="Tsg\Blog\Api\BlogCategoryRepositoryInterface" type="Tsg\Blog\Model\BlogCategoryRepository"/>
 </config>

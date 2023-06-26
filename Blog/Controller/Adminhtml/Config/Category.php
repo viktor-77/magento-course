@@ -11,7 +11,7 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Category extends \Magento\Backend\App\Action
 {
-    private const PAGE_TITLE = 'Blog category creating';
+    private const PAGE_TITLE = 'Blog category';
 
     private PageFactory $pageFactory;
     private Context $context;
@@ -23,7 +23,8 @@ class Category extends \Magento\Backend\App\Action
     public function __construct(
         Context     $context,
         PageFactory $pageFactory
-    ) {
+    )
+    {
         parent::__construct($context);
         $this->pageFactory = $pageFactory;
     }

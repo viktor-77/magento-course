@@ -73,7 +73,7 @@
         <field name="short_text">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">short text</item>
+                    <item name="label" xsi:type="string" translate="true">Short text</item>
                     <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
@@ -84,8 +84,25 @@
                 </item>
             </argument>
         </field>
+        <field name="category" formElement="select" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Tsg\Blog\Model\Source\CategoryOptions</item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Blog Category</label>
+            </settings>
+        </field>
+        <field name="tag" formElement="multiselect" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Tsg\Blog\Model\Source\TagOptions</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">blog tag</item>
+                    <item name="multiple" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </field>
     </fieldset>
 </form>
-
 
 

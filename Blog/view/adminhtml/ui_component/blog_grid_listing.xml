@@ -92,7 +92,7 @@
                 </item>
             </argument>
         </column>
-        <column name="categories">
+        <column name="category">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">textRange</item>
