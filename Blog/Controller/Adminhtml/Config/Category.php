@@ -1,20 +1,19 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Tsg\Blog\Controller\Adminhtml\Config;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-class Category extends \Magento\Backend\App\Action
+class Category extends Action
 {
     private const PAGE_TITLE = 'Blog category';
 
     private PageFactory $pageFactory;
-    private Context $context;
 
     /**
      * @param Context $context

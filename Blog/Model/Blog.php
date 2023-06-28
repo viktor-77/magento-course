@@ -1,25 +1,16 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Tsg\Blog\Model;
 
-class Blog extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
-{
-    private const TABLE_NAME = 'blog_details';
+use Magento\Framework\Model\AbstractModel;
 
+class Blog extends AbstractModel
+{
     /**
      * @return void
      */
     protected function _construct()
     {
-        $this->_init(\Tsg\Blog\Model\ResourceModel\Blog::class);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getIdentities(): array
-    {
-        return [self::TABLE_NAME . '_' . $this->getId()];
+        $this->_init(ResourceModel\Blog::class);
     }
 }

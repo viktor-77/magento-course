@@ -9,6 +9,7 @@ namespace Tsg\Blog\Api\Data;
  */
 interface BlogCategoryInterface
 {
+    const TABLE_NAME = 'blog_category';
     const CATEGORY = 'category';
 
     /**

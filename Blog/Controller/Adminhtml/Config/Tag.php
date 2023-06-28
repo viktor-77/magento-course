@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Tsg\Blog\Controller\Adminhtml\Config;
 
@@ -11,10 +10,9 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Tag extends \Magento\Backend\App\Action
 {
-    private const PAGE_TITLE = 'Blog tags';
+    private const PAGE_TITLE = 'Blog tag';
 
     private PageFactory $pageFactory;
-    private Context $context;
 
     /**
      * @param Context $context

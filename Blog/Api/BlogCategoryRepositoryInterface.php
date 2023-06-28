@@ -14,26 +14,17 @@ use Tsg\Blog\Api\Data\BlogCategoryInterface;
 interface BlogCategoryRepositoryInterface
 {
     /**
-     * @param string $category
-     * @return BlogCategoryInterface
-     */
-    public function getCategoryByName(string $category): BlogCategoryInterface;
-
-    /**
      * @param BlogCategoryInterface $category
      * @return BlogCategoryInterface
+     * @throws LocalizedException
      */
     public function addCategory(BlogCategoryInterface $category): BlogCategoryInterface;
 
-//    /**
-//     * @param BlogCategoryInterface $category
-//     * @return bool
-//     */
-//    public function deleteCategoryByName(BlogCategoryInterface $category): bool;
-
-//    /**
-//     * @param BlogCategoryInterface $category
-//     * @return bool
-//     */
-//    public function updateCategoryByName(BlogCategoryInterface $category): bool;
+    /**
+     * @param BlogCategoryInterface $category
+     * @return bool
+     * @throws NoSuchEntityException
+     * @throws LocalizedException
+     */
+    public function deleteCategoryByName(BlogCategoryInterface $category): bool;
 }

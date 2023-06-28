@@ -3,7 +3,6 @@
 namespace Tsg\Blog\Model;
 
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Tsg\Blog\Api\BlogCategoryRepositoryInterface;
 use Tsg\Blog\Api\Data\BlogCategoryInterface;
 use Tsg\Blog\Model\ResourceModel\BlogCategory as categoryResourceModel;
@@ -13,24 +12,21 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
     private BlogCategoryFactory $blogCategoryFactory;
     private CategoryResourceModel $categoryResourceModel;
 
+    /**
+     * @param \Tsg\Blog\Model\BlogCategoryFactory $blogCategoryFactory
+     * @param categoryResourceModel $categoryResourceModel
+     */
     public function __construct(BlogCategoryFactory $blogCategoryFactory, CategoryResourceModel $categoryResourceModel)
     {
         $this->blogCategoryFactory = $blogCategoryFactory;
         $this->categoryResourceModel = $categoryResourceModel;
     }
 
-    public function getCategoryByName(string $category): BlogCategoryInterface
-    {
-        $categoryModel = $this->BlogCategoryFactory->create();
-        $this->categoryResourceModel->load($categoryModel, $category);
-
-        if (!$categoryModel->getCategory()) {
-            throw new NoSuchEntityException(__("The Category with category = $category doesn't exist"));
-        }
-
-        return $category;
-    }
-
+    /**
+     * @param $category
+     * @return BlogCategoryInterface
+     * @throws CouldNotSaveException
+     */
     public function addCategory($category): BlogCategoryInterface
     {
         try {
@@ -42,5 +38,28 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
         }
 
         return $categoryData;
+    }
+
+    /**
+     * @param $category
+     * @return bool
+     * @throws CouldNotSaveException
+     */
+    public function deleteCategoryByName($category): bool
+    {
+        try {
+            $connection = $this->categoryResourceModel->getConnection();
+            if (isset($category['selected'])) {
+                $connection->delete(BlogCategoryInterface::TABLE_NAME, ['category IN (?)' => $category['selected']]);
+            } elseif (isset($category['excluded'])) {
+                $connection->delete(BlogCategoryInterface::TABLE_NAME, ['category NOT IN (?)' => $category['excluded']]);
+            } else {
+                $connection->delete($connection->getTableName(BlogCategoryInterface::TABLE_NAME));
+            }
+        } catch (\Exception $e) {
+            throw new CouldNotSaveException(__('Could not save the category: %1', $e->getMessage()), $e);
+        }
+
+        return true;
     }
 }

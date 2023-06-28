@@ -1,20 +1,19 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Tsg\Blog\Controller\Adminhtml\Config;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-class Record extends \Magento\Backend\App\Action
+class Record extends Action
 {
-    private const PAGE_TITLE = 'Blog record';
+    private const PAGE_TITLE = 'Blog';
 
     private PageFactory $pageFactory;
-    private Context $context;
 
     /**
      * @param Context $context
