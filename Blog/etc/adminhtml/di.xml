@@ -42,4 +42,6 @@
     <preference for="Tsg\Blog\Api\BlogCategoryRepositoryInterface" type="Tsg\Blog\Model\BlogCategoryRepository"/>
     <preference for="Tsg\Blog\Api\Data\BlogTagInterface" type="Tsg\Blog\Model\BlogTag"/>
     <preference for="Tsg\Blog\Api\BlogTagRepositoryInterface" type="Tsg\Blog\Model\BlogTagRepository"/>
+    <preference for="Tsg\Blog\Api\Data\BlogInterface" type="Tsg\Blog\Model\Blog"/>
+    <preference for="Tsg\Blog\Api\BlogRepositoryInterface" type="Tsg\Blog\Model\BlogRepository"/>
 </config>

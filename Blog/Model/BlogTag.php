@@ -18,7 +18,7 @@ class BlogTag extends AbstractModel implements BlogTagInterface
     /**
      * @return $this|BlogTag
      */
-    public function getTag()
+    public function getTag(): BlogTagInterface
     {
         $this->getData(self::TAG);
         return $this;
@@ -29,7 +29,7 @@ class BlogTag extends AbstractModel implements BlogTagInterface
      * @param string $tag
      * @return $this|BlogTag
      */
-    public function setTag(string $tag)
+    public function setTag(string $tag): BlogTagInterface
     {
         $this->setData(self::TAG, $tag);
         return $this;

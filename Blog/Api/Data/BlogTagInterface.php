@@ -13,13 +13,13 @@ interface BlogTagInterface
     const TAG = 'tag';
 
     /**
-     * @return $this
+     * @return BlogTagInterface
      */
-    public function getTag();
+    public function getTag(): BlogTagInterface;
 
     /**
      * @param string $tag
-     * @return $this
+     * @return BlogTagInterface
      */
-    public function setTag(string $tag);
+    public function setTag(string $tag): BlogTagInterface;
 }

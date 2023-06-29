@@ -13,13 +13,13 @@ interface BlogCategoryInterface
     const CATEGORY = 'category';
 
     /**
-     * @return $this
+     * @return BlogCategoryInterface
      */
-    public function getCategory();
+    public function getCategory(): BlogCategoryInterface;
 
     /**
      * @param string $category
-     * @return $this
+     * @return BlogCategoryInterface
      */
-    public function setCategory(string $category);
+    public function setCategory(string $category): BlogCategoryInterface;
 }

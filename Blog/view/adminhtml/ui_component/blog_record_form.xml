@@ -24,7 +24,7 @@
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="blog/config/saverecord"/>
+                    <item name="submit_url" xsi:type="url" path="blog/config/save_record"/>
                 </item>
             </argument>
         </argument>
@@ -93,7 +93,7 @@
                 <label translate="true">Blog Category</label>
             </settings>
         </field>
-        <field name="tag" formElement="multiselect" sortOrder="30">
+        <field name="tags" formElement="multiselect" sortOrder="30">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Tsg\Blog\Model\Source\TagOptions</item>
                 <item name="config" xsi:type="array">

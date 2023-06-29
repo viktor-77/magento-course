@@ -18,7 +18,7 @@ class BlogCategory extends AbstractModel implements BlogCategoryInterface
     /**
      * @return $this|BlogCategory
      */
-    public function getCategory()
+    public function getCategory(): BlogCategoryInterface
     {
         $this->getData(self::CATEGORY);
         return $this;
@@ -29,7 +29,7 @@ class BlogCategory extends AbstractModel implements BlogCategoryInterface
      * @param string $category
      * @return $this|BlogCategory
      */
-    public function setCategory(string $category)
+    public function setCategory(string $category): BlogCategoryInterface
     {
         $this->setData(self::CATEGORY, $category);
         return $this;
