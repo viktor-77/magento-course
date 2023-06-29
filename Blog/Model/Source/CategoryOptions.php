@@ -34,7 +34,7 @@ class CategoryOptions implements OptionSourceInterface
     {
         $optionsArray = [];
         foreach ($this->categoryRepository->getCollection() as $option) {
-            $optionsArray[] = ['value' => $option['category'], 'label' => $option['category']];
+            $optionsArray[] = ['value' => $option['category'], 'label' => __($option['category'])];
         }
         return $optionsArray;
     }

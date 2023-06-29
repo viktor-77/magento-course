@@ -34,7 +34,7 @@ class TagOptions implements OptionSourceInterface
     {
         $optionsArray = [];
         foreach ($this->tagRepository->getCollection() as $option) {
-            $optionsArray[] = ['value' => $option['tag'], 'label' => $option['tag']];
+            $optionsArray[] = ['value' => $option['tag'], 'label' => __($option['tag'])];
         }
         return $optionsArray;
     }

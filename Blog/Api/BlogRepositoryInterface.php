@@ -2,6 +2,8 @@
 
 namespace Tsg\Blog\Api;
 
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Tsg\Blog\Api\Data\BlogInterface;
@@ -17,23 +19,30 @@ interface BlogRepositoryInterface
      * @param BlogInterface $record
      * @return BlogInterface
      * @throws LocalizedException
+     * @throws CouldNotSaveException
      */
     public function addRecord(BlogInterface $record): BlogInterface;
 
 //    /**
-//     * @param BlogCategoryInterface $id
-//     * @return BlogCategoryInterface
+//     * @param BlogInterface $id
+//     * @return BlogInterface
 //     * @throws NoSuchEntityException
 //     * @throws LocalizedException
 //     */
-//    public function getById(BlogCategoryInterface $id): BlogCategoryInterface;
+//    public function getById(BlogInterface $id): BlogInterface;
 //
 //    /**
-//     * @param BlogCategoryInterface $record
 //     * @return bool
 //     * @throws NoSuchEntityException
+//     * @throws CouldNotDeleteException
 //     * @throws LocalizedException
 //     */
-//    public function deleteById(BlogCategoryInterface $record): bool;
-
+//    public function deleteById($id): bool;
+//
+//    /**
+//     * @return bool
+//     * @throws CouldNotDeleteException
+//     * @throws LocalizedException
+//     */
+//    public function deleteAll(): bool;
 }
