@@ -6,20 +6,24 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Tsg\Blog\Api\BlogCategoryRepositoryInterface;
 use Tsg\Blog\Api\Data\BlogCategoryInterface;
 use Tsg\Blog\Model\ResourceModel\BlogCategory as categoryResourceModel;
+use Tsg\Blog\Model\ResourceModel\Collection\CategoryCollectionFactory;
 
 class BlogCategoryRepository implements BlogCategoryRepositoryInterface
 {
     private BlogCategoryFactory $blogCategoryFactory;
     private CategoryResourceModel $categoryResourceModel;
+    protected CategoryCollectionFactory $collectionFactory;
 
     /**
-     * @param \Tsg\Blog\Model\BlogCategoryFactory $blogCategoryFactory
+     * @param BlogCategoryFactory $blogCategoryFactory
      * @param categoryResourceModel $categoryResourceModel
+     * @param CategoryCollectionFactory $collectionFactory
      */
-    public function __construct(BlogCategoryFactory $blogCategoryFactory, CategoryResourceModel $categoryResourceModel)
+    public function __construct(BlogCategoryFactory $blogCategoryFactory, CategoryResourceModel $categoryResourceModel, CategoryCollectionFactory $collectionFactory)
     {
         $this->blogCategoryFactory = $blogCategoryFactory;
         $this->categoryResourceModel = $categoryResourceModel;
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
@@ -45,7 +49,7 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
      * @return bool
      * @throws CouldNotSaveException
      */
-    public function deleteCategoryByName($category): bool
+    public function deleteCategory($category): bool
     {
         try {
             $connection = $this->categoryResourceModel->getConnection();
@@ -61,5 +65,13 @@ class BlogCategoryRepository implements BlogCategoryRepositoryInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCollection(): ?array
+    {
+        return $this->collectionFactory->create()->load()->getData();
     }
 }

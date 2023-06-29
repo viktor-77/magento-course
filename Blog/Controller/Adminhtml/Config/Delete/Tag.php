@@ -40,7 +40,7 @@ class Tag extends Action
      */
     public function execute()
     {
-        $this->blogTagRepository->deleteTagByName($this->getRequest()->getPostValue());
+        $this->blogTagRepository->deleteTag($this->getRequest()->getPostValue());
 
         return $this->resultRedirectFactory->create()->setPath('blog/config/tag');
     }

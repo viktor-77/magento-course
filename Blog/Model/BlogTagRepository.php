@@ -6,20 +6,25 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Tsg\Blog\Api\BlogTagRepositoryInterface;
 use Tsg\Blog\Api\Data\BlogTagInterface;
 use Tsg\Blog\Model\ResourceModel\BlogTag as TagResourceModel;
+use Tsg\Blog\Model\ResourceModel\Collection\TagCollectionFactory;
+
 
 class BlogTagRepository implements BlogTagRepositoryInterface
 {
     private BlogTagFactory $blogTagFactory;
     private TagResourceModel $tagResourceModel;
+    protected TagCollectionFactory $collectionFactory;
+
 
     /**
      * @param BlogTagFactory $blogTagFactory
      * @param TagResourceModel $tagResourceModel
      */
-    public function __construct(BlogTagFactory $blogTagFactory, TagResourceModel $tagResourceModel)
+    public function __construct(BlogTagFactory $blogTagFactory, TagResourceModel $tagResourceModel, TagCollectionFactory $collectionFactory)
     {
         $this->blogTagFactory = $blogTagFactory;
         $this->tagResourceModel = $tagResourceModel;
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
@@ -45,7 +50,7 @@ class BlogTagRepository implements BlogTagRepositoryInterface
      * @return bool
      * @throws CouldNotSaveException
      */
-    public function deleteTagByName($tag): bool
+    public function deleteTag($tag): bool
     {
         try {
             $connection = $this->tagResourceModel->getConnection();
@@ -61,5 +66,13 @@ class BlogTagRepository implements BlogTagRepositoryInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCollection(): ?array
+    {
+        return $this->collectionFactory->create()->load()->getData();
     }
 }

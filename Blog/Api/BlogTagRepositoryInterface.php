@@ -26,5 +26,10 @@ interface BlogTagRepositoryInterface
      * @throws NoSuchEntityException
      * @throws LocalizedException
      */
-    public function deleteTagByName(BlogTagInterface $tag): bool;
+    public function deleteTag(BlogTagInterface $tag): bool;
+
+    /**
+     * @return array|null
+     */
+    public function getCollection(): ?array;
 }

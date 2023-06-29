@@ -26,5 +26,10 @@ interface BlogCategoryRepositoryInterface
      * @throws NoSuchEntityException
      * @throws LocalizedException
      */
-    public function deleteCategoryByName(BlogCategoryInterface $category): bool;
+    public function deleteCategory(BlogCategoryInterface $category): bool;
+
+    /**
+     * @return array|null
+     */
+    public function getCollection(): ?array;
 }

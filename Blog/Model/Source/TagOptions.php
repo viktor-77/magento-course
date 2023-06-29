@@ -2,38 +2,40 @@
 
 namespace Tsg\Blog\Model\Source;
 
-use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Framework\Data\OptionSourceInterface;
+use Tsg\Blog\Model\BlogTagRepository;
 
 class TagOptions implements OptionSourceInterface
 {
-    /**
-     * @var CollectionFactory
-     */
-    protected CollectionFactory $collectionFactory;
+    protected BlogTagRepository $tagRepository;
 
+    /**
+     * @param BlogTagRepository $tagRepository
+     */
     public function __construct(
-        CollectionFactory $collectionFactory
+        BlogTagRepository $tagRepository
     )
     {
-        $this->collectionFactory = $collectionFactory;
+        $this->tagRepository = $tagRepository;
     }
 
-    public function toOptionArray()
+    /**
+     * @return array
+     */
+    public function toOptionArray(): array
     {
-        return [
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-        ];
+        return $this->_getOptions();
+    }
+
+    /**
+     * @return array
+     */
+    private function _getOptions(): array
+    {
+        $optionsArray = [];
+        foreach ($this->tagRepository->getCollection() as $option) {
+            $optionsArray[] = ['value' => $option['tag'], 'label' => $option['tag']];
+        }
+        return $optionsArray;
     }
 }

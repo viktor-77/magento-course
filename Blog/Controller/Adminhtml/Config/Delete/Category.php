@@ -40,7 +40,7 @@ class Category extends Action
      */
     public function execute()
     {
-        $this->blogCategoryRepository->deleteCategoryByName($this->getRequest()->getPostValue());
+        $this->blogCategoryRepository->deleteCategory($this->getRequest()->getPostValue());
 
         return $this->resultRedirectFactory->create()->setPath('blog/config/category');
     }

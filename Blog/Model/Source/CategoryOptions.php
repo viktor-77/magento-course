@@ -2,28 +2,40 @@
 
 namespace Tsg\Blog\Model\Source;
 
-use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Framework\Data\OptionSourceInterface;
+use Tsg\Blog\Model\BlogCategoryRepository;
 
 class CategoryOptions implements OptionSourceInterface
 {
-    /**
-     * @var CollectionFactory
-     */
-    protected CollectionFactory $collectionFactory;
+    protected BlogCategoryRepository $categoryRepository;
 
+    /**
+     * @param BlogCategoryRepository $categoryRepository
+     */
     public function __construct(
-        CollectionFactory $collectionFactory
+        BlogCategoryRepository $categoryRepository
     )
     {
-        $this->collectionFactory = $collectionFactory;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    public function toOptionArray()
+    /**
+     * @return array
+     */
+    public function toOptionArray(): array
     {
-        return [
-            ['value' => 'option1', 'label' => __('Option 1')],
-            ['value' => 'option2', 'label' => __('Option 2')],
-        ];
+        return $this->_getOptions();
+    }
+
+    /**
+     * @return array
+     */
+    private function _getOptions(): array
+    {
+        $optionsArray = [];
+        foreach ($this->categoryRepository->getCollection() as $option) {
+            $optionsArray[] = ['value' => $option['category'], 'label' => $option['category']];
+        }
+        return $optionsArray;
     }
 }
