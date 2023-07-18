@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="post_listing_data_source" xsi:type="string">
+                    Umanskiy\Blog\Model\ResourceModel\Grid\Collection
+                </item>
+                <item name="tag_listing_data_source" xsi:type="string">
+                    Umanskiy\Blog\Model\ResourceModel\Grid\TagCollection
+                </item>
+                <item name="blog_category_listing_data_source" xsi:type="string">
+                    Umanskiy\Blog\Model\ResourceModel\Grid\CategoryCollection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Umanskiy\Blog\Model\ResourceModel\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">blog_post</argument>
+            <argument name="resourceModel" xsi:type="string">Umanskiy\Blog\Model\ResourceModel\Post</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Umanskiy\Blog\Model\ResourceModel\Grid\TagCollection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">blog_tag</argument>
+            <argument name="resourceModel" xsi:type="string">Umanskiy\Blog\Model\ResourceModel\Tag</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Umanskiy\Blog\Model\ResourceModel\Grid\CategoryCollection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">blog_category</argument>
+            <argument name="resourceModel" xsi:type="string">Umanskiy\Blog\Model\ResourceModel\Category</argument>
+        </arguments>
+    </virtualType>
+
+    <preference for="Umanskiy\Blog\Api\Data\CategoryInterface" type="Umanskiy\Blog\Model\Category"/>
+    <preference for="Umanskiy\Blog\Api\CategoryRepositoryInterface" type="Umanskiy\Blog\Model\CategoryRepository"/>
+    <preference for="Umanskiy\Blog\Api\Data\TagInterface" type="Umanskiy\Blog\Model\Tag"/>
+    <preference for="Umanskiy\Blog\Api\TagRepositoryInterface" type="Umanskiy\Blog\Model\TagRepository"/>
+    <preference for="Umanskiy\Blog\Api\Data\PostInterface" type="Umanskiy\Blog\Model\Post"/>
+    <preference for="Umanskiy\Blog\Api\PostRepositoryInterface" type="Umanskiy\Blog\Model\PostRepository"/>
+</config>

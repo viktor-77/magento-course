@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Umanskiy_Blog::blog" title="Blog" translate="title" module="Umanskiy_Blog"
+             sortOrder="10" dependsOnModule="Umanskiy_Blog" resource="Umanskiy_Blog::blog"/>
+
+        <add id="Umanskiy_Blog::post" title="Post" translate="title" module="Umanskiy_Blog"
+             sortOrder="20" dependsOnModule="Umanskiy_Blog"
+             action="blog/management/post_index" resource="Umanskiy_Blog::post"
+             parent="Umanskiy_Blog::blog"/>
+        <add id="Umanskiy_Blog::tag" title="Tag" translate="title" module="Umanskiy_Blog"
+             sortOrder="20" dependsOnModule="Umanskiy_Blog"
+             action="blog/management/tag_index" resource="Umanskiy_Blog::tag"
+             parent="Umanskiy_Blog::blog"/>
+        <add id="Umanskiy_Blog::category" title="Category" translate="title" module="Umanskiy_Blog"
+             sortOrder="20" dependsOnModule="Umanskiy_Blog"
+             action="blog/management/category_index" resource="Umanskiy_Blog::category"
+             parent="Umanskiy_Blog::blog"/>
+    </menu>
+</config>

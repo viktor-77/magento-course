@@ -1,0 +1,39 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="blog_post">
+        <column xsi:type="int" name="id" identity="true" padding="7" unsigned="true" nullable="false" comment="id"/>
+        <column xsi:type="text" name="thumbnail" nullable="false" comment="thumbnail"/>
+        <column xsi:type="text" name="title" nullable="false" comment="title"/>
+        <column xsi:type="varchar" name="short_text" length="255" nullable="false" comment="short_text"/>
+        <column xsi:type="text" name="tag_ids" nullable="false" comment="tag ids"/>
+        <column xsi:type="int" name="category_id" padding="7" unsigned="true" nullable="false" comment="category id"/>
+        <column xsi:type="timestamp" name="created_at" default="CURRENT_TIMESTAMP" nullable="false" comment="Time of creation"/>
+        <column xsi:type="timestamp" name="modified_at" default="CURRENT_TIMESTAMP" nullable="false" comment="Time of modify"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="CATEGORY_ID" table="blog_post" column="category_id"
+                    referenceTable="blog_category" referenceColumn="id" onDelete="CASCADE"/>
+    </table>
+
+    <table name="blog_tag">
+        <column xsi:type="int" name="id" identity="true" padding="7" unsigned="true" nullable="false" comment="id"/>
+        <column xsi:type="varchar" name="tag_name" nullable="false" length="150" comment="tag name"/>
+        <column xsi:type="timestamp" name="created_at" default="CURRENT_TIMESTAMP" nullable="false" comment="Time of creation"/>
+        <column xsi:type="timestamp" name="modified_at" default="CURRENT_TIMESTAMP" nullable="false" comment="Time of modify"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+
+    <table name="blog_category">
+        <column xsi:type="int" name="id" identity="true" padding="7" unsigned="true" nullable="false" comment="id"/>
+        <column xsi:type="varchar" name="category_name" nullable="false" length="150" comment="category name"/>
+        <column xsi:type="timestamp" name="created_at" default="CURRENT_TIMESTAMP" nullable="false" comment="Time of creation"/>
+        <column xsi:type="timestamp" name="modified_at" default="CURRENT_TIMESTAMP" nullable="false" comment="Time of modify"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+</schema>
