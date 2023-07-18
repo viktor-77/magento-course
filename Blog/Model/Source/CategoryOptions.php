@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Tsg\Blog\Model\Source;
+namespace Umanskiy\Blog\Model\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
-use Tsg\Blog\Model\BlogCategoryRepository;
+use Umanskiy\Blog\Model\CategoryRepository;
 
 class CategoryOptions implements OptionSourceInterface
 {
-    protected BlogCategoryRepository $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
     /**
-     * @param BlogCategoryRepository $categoryRepository
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
-        BlogCategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository
     )
     {
         $this->categoryRepository = $categoryRepository;
@@ -33,7 +33,7 @@ class CategoryOptions implements OptionSourceInterface
     private function _getOptions(): array
     {
         $optionsArray = [];
-        foreach ($this->categoryRepository->getCollection() as $option) {
+        foreach ($this->categoryRepository->getList() as $option) {
             $optionsArray[] = ['value' => $option['category'], 'label' => __($option['category'])];
         }
         return $optionsArray;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tsg\Blog\Model;
+namespace Umanskiy\Blog\Model;
 
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\ReportingInterface;
@@ -11,9 +11,9 @@ use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider as Mage
 class DataProvider extends MagentoDataProvider
 {
     /**
-     * @param $name
-     * @param $primaryFieldName
-     * @param $requestFieldName
+     * @param string $name
+     * @param string $primaryFieldName
+     * @param string $requestFieldName
      * @param ReportingInterface $reporting
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param RequestInterface $request

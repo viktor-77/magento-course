@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tsg\BestPrice\Block\Adminhtml\Button;
+namespace Umanskiy\Blog\Block\Adminhtml\Button;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Registry;

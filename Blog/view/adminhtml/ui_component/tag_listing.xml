@@ -3,12 +3,12 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">
-                blog_category_listing.blog_category_listing_data_source
+                tag_listing.tag_listing_data_source
             </item>
-            <item name="deps" xsi:type="string">blog_category_listing.blog_category_listing_data_source
+            <item name="deps" xsi:type="string">tag_listing.tag_listing_data_source
             </item>
         </item>
-        <item name="spinner" xsi:type="string">spinner_columns</item>
+        <item name="spinner" xsi:type="string">cms_block_columns</item>
     </argument>
     <listingToolbar name="listing_top">
         <argument name="data" xsi:type="array">
@@ -27,7 +27,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">delete</item>
                         <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="blog/management/category_delete"/>
+                        <item name="url" xsi:type="url" path="blog/management/tag_delete"/>
                     </item>
                 </argument>
             </action>
@@ -38,7 +38,7 @@
             <argument name="class" xsi:type="string">
                 Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
             </argument>
-            <argument name="name" xsi:type="string">blog_category_listing_data_source</argument>
+            <argument name="name" xsi:type="string">tag_listing_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
@@ -52,22 +52,60 @@
             </argument>
         </argument>
     </dataSource>
-    <columns name="spinner_columns">
+    <columns name="cms_block_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="editorConfig" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">
+                        tag_listing.tag_listing.cms_block_columns.ids
+                    </item>
+                    <item name="enabled" xsi:type="boolean">true</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="clientConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="blog/config/save_tag"/>
+                        <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">
+                            tag_listing.tag_listing.cms_block_columns_editor
+                        </item>
+                        <item name="target" xsi:type="string">startEdit</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                            <item name="1" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </item>
+            </item>
+            <item name="css" xsi:type="array">
+                <item name="items" xsi:type="array">
+                    <item name="row" xsi:type="array">
+                        <item name="hover" xsi:type="array">
+                            <item name="cursor" xsi:type="string">pointer</item>
+                        </item>
+                    </item>
+                </item>
+            </item>
+        </argument>
         <selectionsColumn name="ids">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="resizeEnabled" xsi:type="boolean">false</item>
-                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
                     <item name="indexField" xsi:type="string">id</item>
                 </item>
             </argument>
         </selectionsColumn>
-        <column name="category_name">
+        <column name="tag_name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                    </item>
                     <item name="filter" xsi:type="string">textRange</item>
                     <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">category</item>
+                    <item name="label" xsi:type="string" translate="true">tag name</item>
                 </item>
             </argument>
         </column>

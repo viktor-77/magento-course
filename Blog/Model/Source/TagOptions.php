@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Tsg\Blog\Model\Source;
+namespace Umanskiy\Blog\Model\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
-use Tsg\Blog\Model\BlogTagRepository;
+use Umanskiy\Blog\Model\TagRepository;
 
 class TagOptions implements OptionSourceInterface
 {
-    protected BlogTagRepository $tagRepository;
+    protected TagRepository $tagRepository;
 
     /**
-     * @param BlogTagRepository $tagRepository
+     * @param TagRepository $tagRepository
      */
     public function __construct(
-        BlogTagRepository $tagRepository
+        TagRepository $tagRepository
     )
     {
         $this->tagRepository = $tagRepository;
@@ -33,7 +33,7 @@ class TagOptions implements OptionSourceInterface
     private function _getOptions(): array
     {
         $optionsArray = [];
-        foreach ($this->tagRepository->getCollection() as $option) {
+        foreach ($this->tagRepository->getList() as $option) {
             $optionsArray[] = ['value' => $option['tag'], 'label' => __($option['tag'])];
         }
         return $optionsArray;
