@@ -6,7 +6,6 @@ use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Exception\LocalizedException;
 use Umanskiy\Blog\Model\PostRepository;
 
 class Save extends Action
@@ -32,12 +31,12 @@ class Save extends Action
 
     /**
      * @return Redirect
-     * @throws LocalizedException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function execute()
     {
-        $this->blogRepository->addRecord($this->getRequest()->getPostValue());
+        $this->blogRepository->save($this->getRequest()->getParams());
 
-        return $this->resultRedirectFactory->create()->setPath('blog/management/post/index');
+        return $this->resultRedirectFactory->create()->setPath('blog/management/post_index');
     }
 }

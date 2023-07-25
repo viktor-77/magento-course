@@ -38,14 +38,14 @@
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">false</item>
-                <item name="label" xsi:type="string" translate="true">Tag creating</item>
+                <item name="label" xsi:type="string" translate="true">Tag</item>
                 <item name="sortOrder" xsi:type="number">20</item>
             </item>
         </argument>
         <field name="tag">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">New tag name</item>
+                    <item name="label" xsi:type="string" translate="true">Tag name</item>
                     <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>

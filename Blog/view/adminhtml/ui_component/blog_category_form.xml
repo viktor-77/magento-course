@@ -38,20 +38,19 @@
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">false</item>
-                <item name="label" xsi:type="string" translate="true">Category creating</item>
+                <item name="label" xsi:type="string" translate="true">Category</item>
                 <item name="sortOrder" xsi:type="number">20</item>
             </item>
         </argument>
-        <field name="category_name">
+        <field name="category">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">New category name</item>
+                    <item name="label" xsi:type="string" translate="true">Сategory name</item>
                     <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
-                        <item name="letters-with-basic-punc" xsi:type="boolean">true</item>
                     </item>
                 </item>
             </argument>

@@ -9,29 +9,26 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Umanskiy\Blog\Model\CategoryFactory;
 use Umanskiy\Blog\Model\CategoryRepository;
 
 class Save extends Action
 {
     protected $resultRedirectFactory;
-    private CategoryRepository $blogCategoryRepository;
+    private CategoryRepository $categoryRepository;
 
     /**
      * @param Context $context
      * @param RedirectFactory $resultRedirectFactory
-     * @param CategoryRepository $blogCategoryRepository
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         Context            $context,
         RedirectFactory    $resultRedirectFactory,
-        CategoryRepository $blogCategoryRepository,
-        CategoryFactory    $blogCategoryFactory
+        CategoryRepository $categoryRepository
     )
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
-        $this->blogCategoryRepository = $blogCategoryRepository;
-        $this->blogCategoryFactory = $blogCategoryFactory;
+        $this->categoryRepository = $categoryRepository;
         parent::__construct($context);
     }
 
@@ -41,7 +38,7 @@ class Save extends Action
      */
     public function execute()
     {
-        $this->blogCategoryRepository->save($this->getRequest()->getPostValue()['category_name']);
+        $this->categoryRepository->save($this->getRequest()->getParam('category'));
 
         return $this->resultRedirectFactory->create()->setPath('blog/management/category_index');
     }

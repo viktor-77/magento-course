@@ -11,10 +11,10 @@ interface CategoryRepositoryInterface
 {
     /**
      * @param string $categoryName
-     * @return bool true on success
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @param int|null $id
+     * @return bool
      */
-    public function save(string $categoryName): bool;
+    public function save(string $categoryName, ?int $id = null): bool;
 
     /**
      * @param int $categoryId
@@ -37,10 +37,10 @@ interface CategoryRepositoryInterface
     public function delete(array $categoryIds): bool;
 
     /**
-     * @param int $categoryId
+     * @param int $id
      * @return bool true on success
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function deleteById(int $categoryId): bool;
+    public function deleteById(int $id): bool;
 }

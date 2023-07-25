@@ -8,8 +8,6 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Umanskiy\Blog\Model\CategoryRepository;
 
 class Delete extends Action
@@ -26,8 +24,7 @@ class Delete extends Action
         Context            $context,
         RedirectFactory    $resultRedirectFactory,
         CategoryRepository $blogCategoryRepository
-    )
-    {
+    ) {
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->blogCategoryRepository = $blogCategoryRepository;
         parent::__construct($context);
@@ -35,12 +32,11 @@ class Delete extends Action
 
     /**
      * @return Redirect|ResponseInterface|ResultInterface
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
     public function execute()
     {
-        $this->blogCategoryRepository->deleteById((int)$this->getRequest()->getPostValue()['selected'][0]);
+        $this->blogCategoryRepository->delete($this->getRequest()->getParams());
 
         return $this->resultRedirectFactory->create()->setPath('blog/management/category_index');
     }

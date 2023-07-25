@@ -38,7 +38,7 @@ class Save extends Action
      */
     public function execute()
     {
-        $this->tagRepository->save($this->getRequest()->getPostValue()['tag']);
+        $this->tagRepository->save($this->getRequest()->getParam('tag'));
         return $this->resultRedirectFactory->create()->setPath('blog/management/tag_index');
     }
 }

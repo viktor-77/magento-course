@@ -2,114 +2,112 @@
 
 namespace Umanskiy\Blog\Model;
 
+use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface;
 use Umanskiy\Blog\Api\Data\PostInterface;
 use Umanskiy\Blog\Api\PostRepositoryInterface;
-use Umanskiy\Blog\Model\PostFactory;
-use Umanskiy\Blog\Model\ResourceModel\Post as PostResourceModel;
+use Umanskiy\Blog\Model\ResourceModel\Post as ResourceModel;
 
-class PostRepository //implements RepositoryInterface
+class PostRepository implements PostRepositoryInterface
 {
     private PostFactory $postFactory;
-    private PostResourceModel $postResourceModel;
+    private ManagerInterface $messageManager;
+    private ResourceModel $resourceModel;
 
     /**
-     * @param \Umanskiy\Blog\Model\PostFactory $postFactory
-     * @param PostResourceModel $postResourceModel
+     * @param PostFactory $postFactory
+     * @param ResourceModel $resourceModel
+     * @param ManagerInterface $messageManager
      */
-    public function __construct(PostFactory $postFactory, PostResourceModel $postResourceModel)
+    public function __construct(
+        PostFactory      $postFactory,
+        ResourceModel    $resourceModel,
+        ManagerInterface $messageManager
+    )
     {
         $this->postFactory = $postFactory;
-        $this->postResourceModel = $postResourceModel;
+        $this->resourceModel = $resourceModel;
+        $this->messageManager = $messageManager;
     }
 
     /**
-     * @param $record
-     * @return Post
-     * @throws CouldNotSaveException
-     */
-    public function addRecord($record): Post
-    {
-        try {
-            $tags = $record['tags'];
-            $record['tags'] = implode(' ', $tags);
-            $recordData = $this->postFactory->create()->setData($record);
-            $this->postResourceModel->save($recordData);
-        } catch (\Exception $e) {
-            throw new CouldNotSaveException(__('Could not save the tag: %1', $e->getMessage()), $e);
-        }
-
-        return $recordData;
-    }
-
-    /**
-     * @param $record
+     * @param array $postData
+     * @param int|null $id
      * @return bool
      * @throws CouldNotSaveException
      */
-    public function deleteRecord($record): bool
+    public function save(array $postData, ?int $id = null): bool
     {
         try {
-            $connection = $this->postResourceModel->getConnection();
-            if (isset($record['selected'])) {
-                $connection->delete(PostResourceModel::TABLE_NAME, ['id IN (?)' => $record['selected']]);
-            } elseif (isset($record['excluded'])) {
-                $connection->delete(PostResourceModel::TABLE_NAME, ['id NOT IN (?)' => $record['excluded']]);
+            if ($id) {
+                $post = $this->getById($id);
             } else {
-                $connection->delete($connection->getTableName(PostResourceModel::TABLE_NAME));
+                $postData['tag_ids'] = is_array($postData['tag_ids']) ? implode(';', $postData['tag_ids']) : $postData['tag_ids'];
+                $post = $this->postFactory->create();
             }
+
+            $this->resourceModel->save($post->setData($postData));
         } catch (\Exception $e) {
-            throw new CouldNotSaveException(__('Could not save the tag: %1', $e->getMessage()), $e);
+            throw new CouldNotSaveException(__('Could not save the category: %1', $e->getMessage()));
         }
 
         return true;
     }
 
-//    /**
-//     * @param $id
-//     * @return BlogInterface
-//     * @throws NoSuchEntityException
-//     */
-//    public function getById($id): BlogInterface
-//    {
-//        $blog = $this->blogFactory->create();
-//        $this->blogResourceModel->load($blog, $id);
-//
-//        if (!$blog->getId()) {
-//            throw new NoSuchEntityException(__('Blog with id =: %1 does not exist', $id));
-//        }
-//        return $blog;
-//    }
-//
-//    /**
-//     * @param $id
-//     * @return bool
-//     * @throws CouldNotDeleteException
-//     * @throws NoSuchEntityException
-//     */
-//    public function deleteById($id): bool
-//    {
-//        $blog = $this->getById($id);
-//        try {
-//            $this->blogResourceModel->delete($blog);
-//        } catch (\Exception $e) {
-//            throw new CouldNotDeleteException(__($e->getMessage()));
-//        }
-//        return true;
-//    }
-//
-//    /**
-//     * @return bool
-//     * @throws CouldNotDeleteException
-//     */
-//    public function deleteAll(): bool
-//    {
-//        $connection = $this->blogResourceModel->getConnection();
-//        try {
-//            $connection->delete($connection->getTableName(BlogInterface::TABLE_NAME));
-//        } catch (\Exception $e) {
-//            throw new CouldNotDeleteException(__($e->getMessage()));
-//        }
-//        return true;
-//    }
+    /**
+     * @param array $postIds
+     * @return bool
+     * @throws CouldNotDeleteException
+     */
+    public function delete(array $postIds): bool
+    {
+        $connection = $this->resourceModel->getConnection();
+        try {
+            if (isset($postIds['selected'])) {
+                $connection->delete(ResourceModel::TABLE_NAME, ['id IN (?)' => $postIds['selected']]);
+            } elseif (($postIds['excluded'] !== 'false')) {
+                $connection->delete(ResourceModel::TABLE_NAME, ['id NOT IN (?)' => $postIds['excluded']]);
+            } else {
+                $connection->delete($connection->getTableName(ResourceModel::TABLE_NAME));
+            }
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__('Could not delete', $e->getMessage()), $e);
+        }
+        return true;
+    }
+
+    /**
+     * @param $id
+     * @return PostInterface
+     * @throws NoSuchEntityException
+     */
+    public function getById($id): PostInterface
+    {
+        $blog = $this->postFactory->create();
+        $this->resourceModel->load($blog, $id);
+
+        if (!$blog->getId()) {
+            throw new NoSuchEntityException(__('Blog with id =: %1 does not exist', $id));
+        }
+        return $blog;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
+    public function deleteById($id): bool
+    {
+        $blog = $this->getById($id);
+        try {
+            $this->resourceModel->delete($blog);
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__($e->getMessage()));
+        }
+        return true;
+    }
 }

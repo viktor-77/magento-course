@@ -21,6 +21,7 @@ class TagOptions implements OptionSourceInterface
 
     /**
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function toOptionArray(): array
     {
@@ -29,12 +30,13 @@ class TagOptions implements OptionSourceInterface
 
     /**
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function _getOptions(): array
     {
         $optionsArray = [];
         foreach ($this->tagRepository->getList() as $option) {
-            $optionsArray[] = ['value' => $option['tag'], 'label' => __($option['tag'])];
+            $optionsArray[] = ['value' => $option['id'], 'label' => __($option['name'])];
         }
         return $optionsArray;
     }

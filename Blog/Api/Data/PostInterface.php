@@ -11,8 +11,8 @@ interface PostInterface
     public const THUMBNAIL = 'thumbnail';
     public const TITLE = 'title';
     public const SHORT_TEXT = 'short_text';
-    public const TAGS = 'tags';
-    public const CATEGORY = 'category';
+    public const TAG_IDS = 'tag_ids';
+    public const CATEGORY_ID = 'category_id';
     public const CREATED_AT = 'created_at';
     public const MODIFIED_AT = 'modified_at';
 
@@ -60,10 +60,10 @@ interface PostInterface
     public function getTags(): string;
 
     /**
-     * @param string $tags
+     * @param string $tag_ids
      * @return PostInterface
      */
-    public function setTags(string $tags): PostInterface;
+    public function setTags(string $tag_ids): PostInterface;
 
     /**
      * @return string
@@ -71,10 +71,10 @@ interface PostInterface
     public function getCategory(): string;
 
     /**
-     * @param string $category
+     * @param string $category_id
      * @return PostInterface
      */
-    public function setCategory(string $category): PostInterface;
+    public function setCategory(string $category_id): PostInterface;
 
     /**
      * @return string

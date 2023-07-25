@@ -62,7 +62,7 @@
                     <item name="enabled" xsi:type="boolean">true</item>
                     <item name="indexField" xsi:type="string">id</item>
                     <item name="clientConfig" xsi:type="array">
-                        <item name="saveUrl" xsi:type="url" path="blog/config/save_tag"/>
+                        <item name="saveUrl" xsi:type="url" path="blog/management/tag_edit"/>
                         <item name="validateBeforeSave" xsi:type="boolean">false</item>
                     </item>
                 </item>
@@ -79,15 +79,6 @@
                     </item>
                 </item>
             </item>
-            <item name="css" xsi:type="array">
-                <item name="items" xsi:type="array">
-                    <item name="row" xsi:type="array">
-                        <item name="hover" xsi:type="array">
-                            <item name="cursor" xsi:type="string">pointer</item>
-                        </item>
-                    </item>
-                </item>
-            </item>
         </argument>
         <selectionsColumn name="ids">
             <argument name="data" xsi:type="array">
@@ -97,7 +88,7 @@
                 </item>
             </argument>
         </selectionsColumn>
-        <column name="tag_name">
+        <column name="name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="editor" xsi:type="array">
@@ -105,7 +96,7 @@
                     </item>
                     <item name="filter" xsi:type="string">textRange</item>
                     <item name="sorting" xsi:type="string">asc</item>
-                    <item name="label" xsi:type="string" translate="true">tag name</item>
+                    <item name="label" xsi:type="string" translate="true">name</item>
                 </item>
             </argument>
         </column>

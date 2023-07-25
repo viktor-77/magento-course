@@ -11,15 +11,16 @@ interface TagRepositoryInterface
 {
     /**
      * @param string $tagName
-     * @return bool true on success
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @param int|null $id
+     * @return bool
      */
-    public function save(string $tagName): bool;
+    public function save(string $tagName, ?int $id = null): bool;
 
     /**
      * @param int $tagId
      * @return \Umanskiy\Blog\Api\Data\TagInterface
      * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getById(int $tagId): \Umanskiy\Blog\Api\Data\TagInterface;
 
@@ -33,14 +34,16 @@ interface TagRepositoryInterface
      * @param array $tagIds
      * @return bool true on success
      * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
     public function delete(array $tagIds): bool;
 
     /**
-     * @param int $tagId
+     * @param int $id
      * @return bool true on success
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function deleteById(int $tagId): bool;
+    public function deleteById(int $id): bool;
 }

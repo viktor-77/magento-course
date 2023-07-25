@@ -29,12 +29,13 @@ class CategoryOptions implements OptionSourceInterface
 
     /**
      * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function _getOptions(): array
     {
         $optionsArray = [];
         foreach ($this->categoryRepository->getList() as $option) {
-            $optionsArray[] = ['value' => $option['category'], 'label' => __($option['category'])];
+            $optionsArray[] = ['value' => $option['id'], 'label' => __($option['name'])];
         }
         return $optionsArray;
     }

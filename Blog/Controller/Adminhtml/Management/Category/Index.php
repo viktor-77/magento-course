@@ -34,7 +34,7 @@ class Index extends Action
     public function execute()
     {
         $resultPage = $this->pageFactory->create();
-//        $resultPage->getConfig()->getTitle()->prepend(self::PAGE_TITLE);
+        $resultPage->getConfig()->getTitle()->prepend(self::PAGE_TITLE);
         return $resultPage;
     }
 }

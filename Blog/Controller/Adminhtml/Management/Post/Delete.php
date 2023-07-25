@@ -6,42 +6,36 @@ use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Umanskiy\Blog\Model\PostRepository;
 
 class Delete extends Action
 {
     protected $resultRedirectFactory;
-    private PostRepository $blogRepository;
+    private PostRepository $postRepository;
 
     /**
      * @param Context $context
      * @param RedirectFactory $resultRedirectFactory
-     * @param PostRepository $blogRepository
+     * @param PostRepository $postRepository
      */
     public function __construct(
         Context         $context,
         RedirectFactory $resultRedirectFactory,
-        PostRepository  $blogRepository
-    )
-    {
+        PostRepository  $postRepository
+    ) {
         $this->resultRedirectFactory = $resultRedirectFactory;
-        $this->blogRepository = $blogRepository;
+        $this->postRepository = $postRepository;
         parent::__construct($context);
     }
 
     /**
-     * @return Redirect|ResponseInterface|ResultInterface
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
+     * @return Redirect
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
     public function execute()
     {
-        $this->blogRepository->deleteRecord($this->getRequest()->getPostValue());
+        $this->postRepository->delete($this->getRequest()->getParams());
 
-        return $this->resultRedirectFactory->create()->setPath('blog/management/post/index');
+        return $this->resultRedirectFactory->create()->setPath('blog/management/post_index');
     }
 }

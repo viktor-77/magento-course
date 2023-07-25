@@ -8,7 +8,7 @@ namespace Umanskiy\Blog\Api\Data;
 interface CategoryInterface
 {
     public const ID = 'id';
-    public const CATEGORY_NAME = 'category_name';
+    public const NAME = 'name';
     public const CREATED_AT = 'created_at';
     public const MODIFIED_AT = 'modified_at';
 

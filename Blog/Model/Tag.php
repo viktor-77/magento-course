@@ -20,7 +20,8 @@ class Tag extends AbstractModel implements TagInterface
      */
     public function getId(): ?int
     {
-        return $this->getData(self::ID);
+        return is_null($this->getData(self::ID)) ?
+            null : (int)$this->getData(self::ID);
     }
 
     /**
@@ -28,7 +29,7 @@ class Tag extends AbstractModel implements TagInterface
      */
     public function getTagName(): string
     {
-        return $this->getData(self::TAG_NAME);
+        return $this->getData(self::NAME);
     }
 
     /**
@@ -37,7 +38,7 @@ class Tag extends AbstractModel implements TagInterface
      */
     public function setTagName(string $tagName): TagInterface
     {
-        $this->setData(self::TAG_NAME, $tagName);
+        $this->setData(self::NAME, $tagName);
         return $this;
     }
 
@@ -65,5 +66,14 @@ class Tag extends AbstractModel implements TagInterface
     {
         $this->setData(self::MODIFIED_AT, $time);
         return $this;
+    }
+
+    /**
+     * @return Tag
+     */
+    public function beforeSave(): Tag
+    {
+        $this->setModifiedAt(date('Y-m-d H:i:s'));
+        return parent::beforeSave();
     }
 }

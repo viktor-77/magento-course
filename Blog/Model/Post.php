@@ -20,7 +20,8 @@ class Post extends AbstractModel implements PostInterface
      */
     public function getId(): ?int
     {
-        return $this->getData(self::ID);
+        return is_null($this->getData(self::ID)) ?
+            null : (int)$this->getData(self::ID);
     }
 
     /**
@@ -82,16 +83,16 @@ class Post extends AbstractModel implements PostInterface
      */
     public function getTags(): string
     {
-        return $this->getData(self::TAGS);
+        return $this->getData(self::TAG_IDS);
     }
 
     /**
-     * @param string $tags
+     * @param string $tag_ids
      * @return PostInterface
      */
-    public function setTags(string $tags): PostInterface
+    public function setTags(string $tag_ids): PostInterface
     {
-        $this->setData(self::TAGS, $tags);
+        $this->setData(self::TAG_IDS, $tag_ids);
         return $this;
     }
 
@@ -100,16 +101,16 @@ class Post extends AbstractModel implements PostInterface
      */
     public function getCategory(): string
     {
-        return $this->getData(self::CATEGORY);
+        return $this->getData(self::CATEGORY_ID);
     }
 
     /**
-     * @param string $category
+     * @param string $category_id
      * @return PostInterface
      */
-    public function setCategory(string $category): PostInterface
+    public function setCategory(string $category_id): PostInterface
     {
-        $this->setData(self::CATEGORY, $category);
+        $this->setData(self::CATEGORY_ID, $category_id);
         return $this;
     }
 
@@ -138,5 +139,14 @@ class Post extends AbstractModel implements PostInterface
     {
         $this->setData(self::MODIFIED_AT, $time);
         return $this;
+    }
+
+    /**
+     * @return Post
+     */
+    public function beforeSave(): Post
+    {
+        $this->setModifiedAt(date('Y-m-d H:i:s'));
+        return parent::beforeSave();
     }
 }

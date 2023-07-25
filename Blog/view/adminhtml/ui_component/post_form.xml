@@ -84,7 +84,7 @@
                 </item>
             </argument>
         </field>
-        <field name="category" formElement="select" sortOrder="20">
+        <field name="category_id" formElement="select" sortOrder="20">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Umanskiy\Blog\Model\Source\CategoryOptions</item>
             </argument>
@@ -93,7 +93,7 @@
                 <label translate="true">Blog Category</label>
             </settings>
         </field>
-        <field name="tags" formElement="multiselect" sortOrder="30">
+        <field name="tag_ids" formElement="multiselect" sortOrder="30">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Umanskiy\Blog\Model\Source\TagOptions</item>
                 <item name="config" xsi:type="array">

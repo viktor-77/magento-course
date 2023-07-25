@@ -20,7 +20,8 @@ class Category extends AbstractModel implements CategoryInterface
      */
     public function getId(): ?int
     {
-        return $this->getData(self::ID);
+        return is_null($this->getData(self::ID)) ?
+            null : (int)$this->getData(self::ID);
     }
 
     /**
@@ -28,7 +29,7 @@ class Category extends AbstractModel implements CategoryInterface
      */
     public function getCategoryName(): string
     {
-        return $this->getData(self::CATEGORY_NAME);
+        return $this->getData(self::NAME);
     }
 
     /**
@@ -37,7 +38,7 @@ class Category extends AbstractModel implements CategoryInterface
      */
     public function setCategoryName(string $categoryName): CategoryInterface
     {
-        $this->setData(self::CATEGORY_NAME, $categoryName);
+        $this->setData(self::NAME, $categoryName);
         return $this;
     }
 
@@ -65,5 +66,11 @@ class Category extends AbstractModel implements CategoryInterface
     {
         $this->setData(self::MODIFIED_AT, $time);
         return $this;
+    }
+
+    public function beforeSave()
+    {
+        $this->setModifiedAt(date('Y-m-d H:i:s'));
+        return parent::beforeSave();
     }
 }
