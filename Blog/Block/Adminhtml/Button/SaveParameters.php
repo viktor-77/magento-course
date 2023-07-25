@@ -18,7 +18,6 @@ class SaveParameters extends GenericButton implements ButtonProviderInterface
                 'mage-init' => ['button' => ['event' => 'save']],
                 'form-role' => 'save',
             ],
-            'sort_order' => 90,
         ];
     }
 }

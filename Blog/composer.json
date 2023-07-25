@@ -1,0 +1,23 @@
+{
+  "name": "umanskiy/blog",
+  "description": "Umanskiy Blog Module for Magento 2",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com"
+    }
+  ],
+  "require": {
+    "php": "~7.3.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Umanskiy\\Blog\\": ""
+    }
+  }
+}

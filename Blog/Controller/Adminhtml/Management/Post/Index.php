@@ -4,9 +4,6 @@ namespace Umanskiy\Blog\Controller\Adminhtml\Management\Post;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Action
@@ -16,20 +13,19 @@ class Index extends Action
     private PageFactory $pageFactory;
 
     /**
-     * @param Context $context
-     * @param PageFactory $pageFactory
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\View\Result\PageFactory $pageFactory
      */
     public function __construct(
         Context     $context,
         PageFactory $pageFactory
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->pageFactory = $pageFactory;
     }
 
     /**
-     * @return ResponseInterface|ResultInterface|Page
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
      */
     public function execute()
     {

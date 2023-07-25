@@ -8,7 +8,6 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\ManagerInterface;
 use Umanskiy\Blog\Api\CategoryRepositoryInterface;
-use Umanskiy\Blog\Api\Data\CategoryInterface;
 use Umanskiy\Blog\Model\ResourceModel\Category as ResourceModel;
 use Umanskiy\Blog\Model\ResourceModel\Category\CollectionFactory;
 
@@ -24,12 +23,7 @@ class CategoryRepository implements CategoryRepositoryInterface
      * @param CollectionFactory $collectionFactory
      * @param \Umanskiy\Blog\Model\CategoryFactory $categoryFactory
      */
-    public function __construct(
-        ResourceModel     $resourceModel,
-        CollectionFactory $collectionFactory,
-        CategoryFactory   $categoryFactory,
-        ManagerInterface  $messageManager
-    )
+    public function __construct(ResourceModel $resourceModel, CollectionFactory $collectionFactory, CategoryFactory $categoryFactory, ManagerInterface $messageManager)
     {
         $this->resourceModel = $resourceModel;
         $this->collectionFactory = $collectionFactory;
@@ -41,18 +35,23 @@ class CategoryRepository implements CategoryRepositoryInterface
      * @param string $tagName
      * @param int|null $id
      * @return bool
-     * @throws CouldNotSaveException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function save(string $tagName, ?int $id = null): bool
     {
         try {
             if ($id) {
-                $tagData = $this->getById($id)->setCategoryName($tagName);
+                $tagData = $this->getById($id);
             } else {
-                $tagData = $this->categoryFactory->create()->setCategoryName($tagName);
+                $tagData = $this->categoryFactory->create();
             }
-            $this->resourceModel->save($tagData);
+            $this->resourceModel->save($tagData->setCategoryName($tagName));
         } catch (\Exception $e) {
+            if ($e->getMessage() === 'Unique constraint violation found') {
+                $this->messageManager->addErrorMessage(__('Category with the same name already exists.'));
+
+                return false;
+            }
             throw new CouldNotSaveException(__('Could not save the category: %1', $e->getMessage()));
         }
 
@@ -60,23 +59,24 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param int $categoryId
-     * @return CategoryInterface
-     * @throws NoSuchEntityException
+     * @param int $id
+     * @return \Umanskiy\Blog\Api\Data\CategoryInterface
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById(int $categoryId): \Umanskiy\Blog\Api\Data\CategoryInterface
+    public function getById(int $id): \Umanskiy\Blog\Api\Data\CategoryInterface
     {
         try {
-            $category = $this->categoryFactory->create()->load($categoryId);
+            $category = $this->categoryFactory->create()->load($id);
         } catch (\Exception $e) {
             throw new NoSuchEntityException(__('Could not save the category: %1', $e->getMessage()), $e);
         }
+
         return $category;
     }
 
     /**
      * @return array
-     * @throws LocalizedException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getList(): array
     {
@@ -85,13 +85,31 @@ class CategoryRepository implements CategoryRepositoryInterface
         } catch (\Exception $e) {
             throw new LocalizedException(__('Could not save the category: %1', $e->getMessage()), $e);
         }
+
         return $list;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     */
+    public function deleteById(int $id): bool
+    {
+        try {
+            $connection = $this->resourceModel->getConnection();
+            $connection->delete(ResourceModel::TABLE_NAME, ["id = $id"]);
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__('Could not delete the category: %1', $id, $e->getMessage()), $e);
+        }
+
+        return true;
     }
 
     /**
      * @param array $categoryIds
      * @return bool
-     * @throws CouldNotDeleteException
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
     public function delete(array $categoryIds): bool
     {
@@ -106,22 +124,6 @@ class CategoryRepository implements CategoryRepositoryInterface
             }
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__('Could not delete', $e->getMessage()), $e);
-        }
-        return true;
-    }
-
-    /**
-     * @param int $id
-     * @return bool
-     * @throws CouldNotDeleteException
-     */
-    public function deleteById(int $id): bool
-    {
-        try {
-            $connection = $this->resourceModel->getConnection();
-            $connection->delete(ResourceModel::TABLE_NAME, ["id = $id"]);
-        } catch (\Exception $e) {
-            throw new CouldNotDeleteException(__('Could not delete the category: %1', $id, $e->getMessage()), $e);
         }
 
         return true;

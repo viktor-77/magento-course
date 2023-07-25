@@ -13,19 +13,27 @@ class Edit extends Action
     protected JsonFactory $resultJsonFactory;
     protected TagRepository $tagRepository;
 
+    /**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Umanskiy\Blog\Model\TagRepository $tagRepository
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     */
     public function __construct(
         Context          $context,
         JsonFactory      $resultJsonFactory,
         TagRepository    $tagRepository,
         ManagerInterface $messageManager
-    )
-    {
+    ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tagRepository = $tagRepository;
         $this->messageManager = $messageManager;
         parent::__construct($context);
     }
 
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         $result = $this->resultJsonFactory->create();

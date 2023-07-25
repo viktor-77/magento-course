@@ -24,7 +24,7 @@ interface TagInterface
 
     /**
      * @param string $tagName
-     * @return TagInterface
+     * @return \Umanskiy\Blog\Api\Data\TagInterface
      */
     public function setTagName(string $tagName): TagInterface;
 
@@ -40,7 +40,7 @@ interface TagInterface
 
     /**
      * @param string $time
-     * @return TagInterface
+     * @return \Umanskiy\Blog\Api\Data\TagInterface
      */
     public function setModifiedAT(string $time): TagInterface;
 }

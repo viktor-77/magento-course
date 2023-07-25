@@ -6,7 +6,7 @@
             <item name="provider" xsi:type="string">tag_form.tag_form_data_source</item>
             <item name="deps" xsi:type="string">tag_form.tag_form_data_source</item>
         </item>
-        <item name="label" xsi:type="string" translate="true">Add New Record</item>
+        <item name="label" xsi:type="string" translate="true">Add Tag</item>
         <item name="config" xsi:type="array">
             <item name="dataScope" xsi:type="string">data</item>
             <item name="namespace" xsi:type="string">tag_form</item>
@@ -51,7 +51,6 @@
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
-                        <item name="letters-with-basic-punc" xsi:type="boolean">true</item>
                     </item>
                 </item>
             </argument>

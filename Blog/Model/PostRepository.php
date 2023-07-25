@@ -5,7 +5,6 @@ namespace Umanskiy\Blog\Model;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Message\ManagerInterface;
 use Umanskiy\Blog\Api\Data\PostInterface;
 use Umanskiy\Blog\Api\PostRepositoryInterface;
 use Umanskiy\Blog\Model\ResourceModel\Post as ResourceModel;
@@ -13,23 +12,16 @@ use Umanskiy\Blog\Model\ResourceModel\Post as ResourceModel;
 class PostRepository implements PostRepositoryInterface
 {
     private PostFactory $postFactory;
-    private ManagerInterface $messageManager;
     private ResourceModel $resourceModel;
 
     /**
-     * @param PostFactory $postFactory
-     * @param ResourceModel $resourceModel
-     * @param ManagerInterface $messageManager
+     * @param \Umanskiy\Blog\Model\PostFactory $postFactory
+     * @param \Umanskiy\Blog\Model\ResourceModel\Post $resourceModel
      */
-    public function __construct(
-        PostFactory      $postFactory,
-        ResourceModel    $resourceModel,
-        ManagerInterface $messageManager
-    )
+    public function __construct(PostFactory $postFactory, ResourceModel $resourceModel)
     {
         $this->postFactory = $postFactory;
         $this->resourceModel = $resourceModel;
-        $this->messageManager = $messageManager;
     }
 
     /**
@@ -38,18 +30,18 @@ class PostRepository implements PostRepositoryInterface
      * @return bool
      * @throws CouldNotSaveException
      */
-    public function save(array $postData, ?int $id = null): bool
+    public function save(array $postData, ?int $id = NULL): bool
     {
         try {
             if ($id) {
                 $post = $this->getById($id);
-            } else {
+            }
+            else {
                 $postData['tag_ids'] = is_array($postData['tag_ids']) ? implode(';', $postData['tag_ids']) : $postData['tag_ids'];
                 $post = $this->postFactory->create();
             }
-
             $this->resourceModel->save($post->setData($postData));
-        } catch (\Exception $e) {
+        } catch(\Exception $e) {
             throw new CouldNotSaveException(__('Could not save the category: %1', $e->getMessage()));
         }
 
@@ -67,14 +59,17 @@ class PostRepository implements PostRepositoryInterface
         try {
             if (isset($postIds['selected'])) {
                 $connection->delete(ResourceModel::TABLE_NAME, ['id IN (?)' => $postIds['selected']]);
-            } elseif (($postIds['excluded'] !== 'false')) {
+            }
+            elseif (($postIds['excluded'] !== 'false')) {
                 $connection->delete(ResourceModel::TABLE_NAME, ['id NOT IN (?)' => $postIds['excluded']]);
-            } else {
+            }
+            else {
                 $connection->delete($connection->getTableName(ResourceModel::TABLE_NAME));
             }
-        } catch (\Exception $e) {
+        } catch(\Exception $e) {
             throw new CouldNotDeleteException(__('Could not delete', $e->getMessage()), $e);
         }
+
         return true;
     }
 
@@ -91,6 +86,7 @@ class PostRepository implements PostRepositoryInterface
         if (!$blog->getId()) {
             throw new NoSuchEntityException(__('Blog with id =: %1 does not exist', $id));
         }
+
         return $blog;
     }
 
@@ -105,9 +101,10 @@ class PostRepository implements PostRepositoryInterface
         $blog = $this->getById($id);
         try {
             $this->resourceModel->delete($blog);
-        } catch (\Exception $e) {
+        } catch(\Exception $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));
         }
+
         return true;
     }
 }

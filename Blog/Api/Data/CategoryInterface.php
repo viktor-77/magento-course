@@ -24,7 +24,7 @@ interface CategoryInterface
 
     /**
      * @param string $categoryName
-     * @return CategoryInterface
+     * @return \Umanskiy\Blog\Api\Data\CategoryInterface
      */
     public function setCategoryName(string $categoryName): CategoryInterface;
 
@@ -40,7 +40,7 @@ interface CategoryInterface
 
     /**
      * @param string $time
-     * @return CategoryInterface
+     * @return \Umanskiy\Blog\Api\Data\CategoryInterface
      */
     public function setModifiedAT(string $time): CategoryInterface;
 }

@@ -1,0 +1,42 @@
+{
+    "blog_post": {
+        "column": {
+            "id": true,
+            "thumbnail": true,
+            "title": true,
+            "short_text": true,
+            "tag_ids": true,
+            "category_id": true,
+            "created_at": true,
+            "modified_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "BLOG_POST_CATEGORY_ID_BLOG_CATEGORY_ID": true
+        }
+    },
+    "blog_tag": {
+        "column": {
+            "id": true,
+            "name": true,
+            "created_at": true,
+            "modified_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "BLOG_TAG_NAME": true
+        }
+    },
+    "blog_category": {
+        "column": {
+            "id": true,
+            "name": true,
+            "created_at": true,
+            "modified_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "BLOG_CATEGORY_NAME": true
+        }
+    }
+}

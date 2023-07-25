@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Umanskiy\Blog\Setup\Patch\Data;
 
@@ -11,9 +11,6 @@ use Umanskiy\Blog\Model\TagRepository;
 
 class BlogInitialData implements DataPatchInterface
 {
-    /**
-     * @var ModuleDataSetupInterface
-     */
     private ModuleDataSetupInterface $moduleDataSetup;
     private TagRepository $tagRepository;
     private CategoryRepository $categoryRepository;

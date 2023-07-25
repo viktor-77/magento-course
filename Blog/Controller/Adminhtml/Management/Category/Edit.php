@@ -13,12 +13,13 @@ class Edit extends Action
     protected JsonFactory $resultJsonFactory;
     protected CategoryRepository $categoryRepository;
 
-    public function __construct(
-        Context            $context,
-        JsonFactory        $resultJsonFactory,
-        CategoryRepository $categoryRepository,
-        ManagerInterface   $messageManager
-    )
+    /**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Umanskiy\Blog\Model\CategoryRepository $categoryRepository
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     */
+    public function __construct(Context $context, JsonFactory $resultJsonFactory, CategoryRepository $categoryRepository, ManagerInterface $messageManager)
     {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->categoryRepository = $categoryRepository;
@@ -26,6 +27,9 @@ class Edit extends Action
         parent::__construct($context);
     }
 
+    /**
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
@@ -35,7 +39,7 @@ class Edit extends Action
 
             if (isset($data['items'])) {
                 foreach ($data['items'] as $item) {
-                    $this->categoryRepository->save($item['name'], (int)$item['id']);
+                    $this->categoryRepository->save($item['name'], (int) $item['id']);
                 }
             }
             $this->messageManager->addSuccessMessage('Your success message');
@@ -46,11 +50,8 @@ class Edit extends Action
             }
 
             return $result->setData(['messages' => $messages]);
-        } catch (\Exception $e) {
-            return $result->setData([
-                'messages' => $e->getMessage(),
-                'error' => true
-            ]);
+        } catch(\Exception $e) {
+            return $result->setData(['messages' => $e->getMessage(), 'error' => true]);
         }
     }
 }

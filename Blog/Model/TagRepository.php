@@ -3,10 +3,10 @@
 namespace Umanskiy\Blog\Model;
 
 use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-
-//use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\Message\ManagerInterface;
 use Umanskiy\Blog\Api\Data\TagInterface;
 use Umanskiy\Blog\Api\TagRepositoryInterface;
 use Umanskiy\Blog\Model\ResourceModel\Tag as ResourceModel;
@@ -14,52 +14,41 @@ use Umanskiy\Blog\Model\ResourceModel\Tag\CollectionFactory;
 
 class TagRepository implements TagRepositoryInterface
 {
+    protected CollectionFactory $collectionFactory;
     private TagFactory $tagFactory;
     private ResourceModel $resourceModel;
-    protected CollectionFactory $collectionFactory;
+    private ManagerInterface $messageManager;
 
-//    protected ManagerInterface $messageManager;
-
-    public function __construct(
-        TagFactory        $tagFactory,
-        ResourceModel     $resourceModel,
-        CollectionFactory $collectionFactory
-//        ManagerInterface  $messageManager
-    )
+    public function __construct(TagFactory $tagFactory, ResourceModel $resourceModel, CollectionFactory $collectionFactory, ManagerInterface $messageManager)
     {
         $this->tagFactory = $tagFactory;
         $this->resourceModel = $resourceModel;
         $this->collectionFactory = $collectionFactory;
-//        $this->messageManager = $messageManager;
+        $this->messageManager = $messageManager;
     }
 
     /**
      * @param string $tagName
      * @param int|null $id
      * @return bool
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function save(string $tagName, ?int $id = null): bool
     {
         try {
             if ($id) {
-                $tagData = $this->getById($id)->setTagName($tagName);
+                $tag = $this->getById($id);
             } else {
-                $tagData = $this->tagFactory->create()->setTagName($tagName);
+                $tag = $this->tagFactory->create();
             }
-            $this->resourceModel->save($tagData);
-
-//            $successMessage = __(
-//                'Tag with the name: "%1" was successfully saved.',
-//                $tagName
-//            );
-//            $this->messageManager->addSuccessMessage($successMessage);
+            $this->resourceModel->save($tag->setTagName($tagName));
         } catch (\Exception $e) {
-//            $errorMessage = __(
-//                'Could not save the tag with the name: "%1". Tag with the same name already exists.',
-//                $tagName
-//            );
-//            $this->messageManager->addError($errorMessage);
-            return false;
+            if ($e->getMessage() === 'Unique constraint violation found') {
+                $this->messageManager->addErrorMessage(__('Tag with the same name already exists.'));
+
+                return false;
+            }
+            throw new CouldNotSaveException(__('Could not save the category: %1', $e->getMessage()));
         }
 
         return true;
@@ -77,6 +66,7 @@ class TagRepository implements TagRepositoryInterface
         } catch (\Exception $e) {
             throw new NoSuchEntityException(__('Could not save the tag: %1', $e->getMessage()), $e);
         }
+
         return $tag;
     }
 
@@ -91,7 +81,25 @@ class TagRepository implements TagRepositoryInterface
         } catch (\Exception $e) {
             throw new LocalizedException(__('Could not save the tag: %1', $e->getMessage()), $e);
         }
+
         return $list;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     * @throws CouldNotDeleteException
+     */
+    public function deleteById(int $id): bool
+    {
+        try {
+            $connection = $this->resourceModel->getConnection();
+            $connection->delete(ResourceModel::TABLE_NAME, ["id = $id"]);
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__('Could not delete the tag: %1', $id, $e->getMessage()), $e);
+        }
+
+        return true;
     }
 
     /**
@@ -112,22 +120,6 @@ class TagRepository implements TagRepositoryInterface
             }
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__('Could not delete', $e->getMessage()), $e);
-        }
-        return true;
-    }
-
-    /**
-     * @param int $id
-     * @return bool
-     * @throws CouldNotDeleteException
-     */
-    public function deleteById(int $id): bool
-    {
-        try {
-            $connection = $this->resourceModel->getConnection();
-            $connection->delete(ResourceModel::TABLE_NAME, ["id = $id"]);
-        } catch (\Exception $e) {
-            throw new CouldNotDeleteException(__('Could not delete the tag: %1', $id, $e->getMessage()), $e);
         }
 
         return true;

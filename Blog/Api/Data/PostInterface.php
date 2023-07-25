@@ -28,7 +28,7 @@ interface PostInterface
 
     /**
      * @param string $thumbnail
-     * @return PostInterface
+     * @return \Umanskiy\Blog\Api\Data\PostInterface
      */
     public function setThumbnail(string $thumbnail): PostInterface;
 
@@ -39,7 +39,7 @@ interface PostInterface
 
     /**
      * @param string $title
-     * @return PostInterface
+     * @return \Umanskiy\Blog\Api\Data\PostInterface
      */
     public function setTitle(string $title): PostInterface;
 
@@ -50,7 +50,7 @@ interface PostInterface
 
     /**
      * @param string $shortText
-     * @return PostInterface
+     * @return \Umanskiy\Blog\Api\Data\PostInterface
      */
     public function setShortText(string $shortText): PostInterface;
 
@@ -61,7 +61,7 @@ interface PostInterface
 
     /**
      * @param string $tag_ids
-     * @return PostInterface
+     * @return \Umanskiy\Blog\Api\Data\PostInterface
      */
     public function setTags(string $tag_ids): PostInterface;
 
@@ -72,7 +72,7 @@ interface PostInterface
 
     /**
      * @param string $category_id
-     * @return PostInterface
+     * @return \Umanskiy\Blog\Api\Data\PostInterface
      */
     public function setCategory(string $category_id): PostInterface;
 
@@ -88,7 +88,7 @@ interface PostInterface
 
     /**
      * @param string $time
-     * @return PostInterface
+     * @return \Umanskiy\Blog\Api\Data\PostInterface
      */
     public function setModifiedAT(string $time): PostInterface;
 }

@@ -7,15 +7,15 @@
 
         <add id="Umanskiy_Blog::post" title="Post" translate="title" module="Umanskiy_Blog"
              sortOrder="20" dependsOnModule="Umanskiy_Blog"
-             action="blog/management/post_index" resource="Umanskiy_Blog::post"
+             action="blog/management/post_index" resource="Umanskiy_Blog::blog"
              parent="Umanskiy_Blog::blog"/>
         <add id="Umanskiy_Blog::tag" title="Tag" translate="title" module="Umanskiy_Blog"
-             sortOrder="20" dependsOnModule="Umanskiy_Blog"
-             action="blog/management/tag_index" resource="Umanskiy_Blog::tag"
+             sortOrder="30" dependsOnModule="Umanskiy_Blog"
+             action="blog/management/tag_index" resource="Umanskiy_Blog::blog"
              parent="Umanskiy_Blog::blog"/>
         <add id="Umanskiy_Blog::category" title="Category" translate="title" module="Umanskiy_Blog"
-             sortOrder="20" dependsOnModule="Umanskiy_Blog"
-             action="blog/management/category_index" resource="Umanskiy_Blog::category"
+             sortOrder="40" dependsOnModule="Umanskiy_Blog"
+             action="blog/management/category_index" resource="Umanskiy_Blog::blog"
              parent="Umanskiy_Blog::blog"/>
     </menu>
 </config>

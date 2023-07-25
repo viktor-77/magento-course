@@ -88,6 +88,15 @@
                 </item>
             </argument>
         </selectionsColumn>
+        <column name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">numberRange</item>
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="label" xsi:type="string" translate="true">id</item>
+                </item>
+            </argument>
+        </column>
         <column name="name">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -95,7 +104,6 @@
                         <item name="editorType" xsi:type="string">text</item>
                     </item>
                     <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
                     <item name="label" xsi:type="string" translate="true">name</item>
                 </item>
             </argument>
@@ -104,7 +112,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
                     <item name="label" xsi:type="string" translate="true">created_at</item>
                 </item>
             </argument>
@@ -113,7 +120,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">textRange</item>
-                    <item name="sorting" xsi:type="string">asc</item>
                     <item name="label" xsi:type="string" translate="true">modified_at</item>
                 </item>
             </argument>

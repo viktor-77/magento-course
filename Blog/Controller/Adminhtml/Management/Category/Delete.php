@@ -6,8 +6,7 @@ use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Message\ManagerInterface;
 use Umanskiy\Blog\Model\CategoryRepository;
 
 class Delete extends Action
@@ -16,27 +15,28 @@ class Delete extends Action
     private CategoryRepository $blogCategoryRepository;
 
     /**
-     * @param Context $context
-     * @param RedirectFactory $resultRedirectFactory
-     * @param CategoryRepository $blogCategoryRepository
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
+     * @param \Umanskiy\Blog\Model\CategoryRepository $blogCategoryRepository
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(
-        Context            $context,
-        RedirectFactory    $resultRedirectFactory,
-        CategoryRepository $blogCategoryRepository
-    ) {
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, CategoryRepository $blogCategoryRepository, ManagerInterface $messageManager)
+    {
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->blogCategoryRepository = $blogCategoryRepository;
+        $this->messageManager = $messageManager;
         parent::__construct($context);
     }
 
     /**
-     * @return Redirect|ResponseInterface|ResultInterface
+     * @return \Magento\Backend\Model\View\Result\Redirect
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function execute()
+    public function execute(): Redirect
     {
         $this->blogCategoryRepository->delete($this->getRequest()->getParams());
+        $successMessage = __('Successfully deleted.');
+        $this->messageManager->addSuccessMessage($successMessage);
 
         return $this->resultRedirectFactory->create()->setPath('blog/management/category_index');
     }
