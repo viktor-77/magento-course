@@ -7,20 +7,20 @@ use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Message\ManagerInterface;
-use Umanskiy\Blog\Model\PostRepository;
+use Umanskiy\Blog\Api\PostRepositoryInterface;
 
 class Delete extends Action
 {
     protected $resultRedirectFactory;
-    private PostRepository $postRepository;
+    private PostRepositoryInterface $postRepository;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
-     * @param \Umanskiy\Blog\Model\PostRepository $postRepository
+     * @param \Umanskiy\Blog\Api\PostRepositoryInterface $postRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, PostRepository $postRepository, ManagerInterface $messageManager)
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, PostRepositoryInterface $postRepository, ManagerInterface $messageManager)
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->postRepository = $postRepository;

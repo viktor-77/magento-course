@@ -7,23 +7,23 @@ use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Message\ManagerInterface;
-use Umanskiy\Blog\Model\CategoryRepository;
+use Umanskiy\Blog\Api\CategoryRepositoryInterface;
 
 class Delete extends Action
 {
     protected $resultRedirectFactory;
-    private CategoryRepository $blogCategoryRepository;
+    private CategoryRepositoryInterface $categoryRepository;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
-     * @param \Umanskiy\Blog\Model\CategoryRepository $blogCategoryRepository
+     * @param \Umanskiy\Blog\Api\CategoryRepositoryInterface $categoryRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, CategoryRepository $blogCategoryRepository, ManagerInterface $messageManager)
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, CategoryRepositoryInterface $categoryRepository, ManagerInterface $messageManager)
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
-        $this->blogCategoryRepository = $blogCategoryRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->messageManager = $messageManager;
         parent::__construct($context);
     }
@@ -34,7 +34,7 @@ class Delete extends Action
      */
     public function execute(): Redirect
     {
-        $this->blogCategoryRepository->delete($this->getRequest()->getParams());
+        $this->categoryRepository->delete($this->getRequest()->getParams());
         $successMessage = __('Successfully deleted.');
         $this->messageManager->addSuccessMessage($successMessage);
 

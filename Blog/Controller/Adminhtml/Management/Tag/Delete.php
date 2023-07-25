@@ -6,23 +6,23 @@ use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Message\ManagerInterface;
-use Umanskiy\Blog\Model\TagRepository;
+use Umanskiy\Blog\Api\TagRepositoryInterface;
 
 class Delete extends Action
 {
     protected $resultRedirectFactory;
-    private TagRepository $blogTagRepository;
+    private TagRepositoryInterface $tagRepository;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
-     * @param \Umanskiy\Blog\Model\TagRepository $blogTagRepository
+     * @param \Umanskiy\Blog\Api\TagRepositoryInterface $tagRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, TagRepository $blogTagRepository, ManagerInterface $messageManager)
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, TagRepositoryInterface $tagRepository, ManagerInterface $messageManager)
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
-        $this->blogTagRepository = $blogTagRepository;
+        $this->tagRepository = $tagRepository;
         $this->messageManager = $messageManager;
         parent::__construct($context);
     }
@@ -33,7 +33,7 @@ class Delete extends Action
      */
     public function execute()
     {
-        $this->blogTagRepository->delete($this->getRequest()->getParams());
+        $this->tagRepository->delete($this->getRequest()->getParams());
         $successMessage = __('Successfully deleted.');
         $this->messageManager->addSuccessMessage($successMessage);
 

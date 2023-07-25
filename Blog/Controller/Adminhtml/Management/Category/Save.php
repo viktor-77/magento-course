@@ -7,6 +7,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Message\ManagerInterface;
 use Umanskiy\Blog\Model\CategoryRepository;
+use Umanskiy\Blog\Api\CategoryRepositoryInterface;
 
 class Save extends Action
 {
@@ -16,10 +17,10 @@ class Save extends Action
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
-     * @param \Umanskiy\Blog\Model\CategoryRepository $categoryRepository
+     * @param \Umanskiy\Blog\Api\CategoryRepositoryInterface $categoryRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, CategoryRepository $categoryRepository, ManagerInterface $messageManager)
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, CategoryRepositoryInterface $categoryRepository, ManagerInterface $messageManager)
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->categoryRepository = $categoryRepository;
@@ -28,10 +29,10 @@ class Save extends Action
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @return \Magento\Backend\Model\View\Result\Redirect
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function execute()
+    public function execute(): \Magento\Backend\Model\View\Result\Redirect
     {
         if ($this->categoryRepository->save($this->getRequest()->getParam('category'))) {
             $successMessage = __('Category with the name: "%1" was successfully saved.', $this->getRequest()->getParam('category'));

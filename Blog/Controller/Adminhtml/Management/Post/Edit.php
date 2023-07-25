@@ -6,25 +6,21 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Message\ManagerInterface;
-use Umanskiy\Blog\Model\PostRepository;
+use Umanskiy\Blog\Api\PostRepositoryInterface;
 
 class Edit extends Action
 {
     protected JsonFactory $resultJsonFactory;
-    protected PostRepository $postRepository;
+    protected PostRepositoryInterface $postRepository;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Umanskiy\Blog\Model\PostRepository $postRepository
+     * @param \Umanskiy\Blog\Api\PostRepositoryInterface $postRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(
-        Context          $context,
-        JsonFactory      $resultJsonFactory,
-        PostRepository   $postRepository,
-        ManagerInterface $messageManager
-    ) {
+    public function __construct(Context $context, JsonFactory $resultJsonFactory, PostRepositoryInterface $postRepository, ManagerInterface $messageManager)
+    {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->postRepository = $postRepository;
         $this->messageManager = $messageManager;
@@ -43,10 +39,11 @@ class Edit extends Action
 
             if (isset($data['items'])) {
                 foreach ($data['items'] as $item) {
-                    $this->postRepository->save($item, (int)$item['id']);
+                    if ($this->postRepository->save($item, (int) $item['id'])) {
+                        $this->messageManager->addSuccessMessage('Your success message');
+                    }
                 }
             }
-            $this->messageManager->addSuccessMessage('Your success message');
 
             $messages = [];
             foreach ($this->messageManager->getMessages(true)->getItems() as $message) {
@@ -55,10 +52,7 @@ class Edit extends Action
 
             return $result->setData(['messages' => $messages]);
         } catch (\Exception $e) {
-            return $result->setData([
-                'messages' => $e->getMessage(),
-                'error' => true
-            ]);
+            return $result->setData(['messages' => $e->getMessage(), 'error' => true]);
         }
     }
 }

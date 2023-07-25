@@ -7,23 +7,23 @@ use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Message\ManagerInterface;
-use Umanskiy\Blog\Model\PostRepository;
+use Umanskiy\Blog\Api\PostRepositoryInterface;
 
 class Save extends Action
 {
     protected $resultRedirectFactory;
-    private PostRepository $blogRepository;
+    private PostRepositoryInterface $postRepository;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
-     * @param \Umanskiy\Blog\Model\PostRepository $blogRepository
+     * @param \Umanskiy\Blog\Api\PostRepositoryInterface $postRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, PostRepository $blogRepository, ManagerInterface $messageManager)
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, PostRepositoryInterface $postRepository, ManagerInterface $messageManager)
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
-        $this->blogRepository = $blogRepository;
+        $this->postRepository = $postRepository;
         $this->messageManager = $messageManager;
         parent::__construct($context);
     }
@@ -34,7 +34,7 @@ class Save extends Action
      */
     public function execute(): Redirect
     {
-        $this->blogRepository->save($this->getRequest()->getParams());
+        $this->postRepository->save($this->getRequest()->getParams());
         $this->messageManager->addSuccessMessage(__('Post was successfully saved.'));
 
         return $this->resultRedirectFactory->create()->setPath('blog/management/post_index');

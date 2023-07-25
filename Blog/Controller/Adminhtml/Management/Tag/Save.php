@@ -6,20 +6,20 @@ use Magento\Backend\Model\View\Result\RedirectFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Message\ManagerInterface;
-use Umanskiy\Blog\Model\TagRepository;
+use Umanskiy\Blog\Api\TagRepositoryInterface;
 
 class Save extends Action
 {
     protected $resultRedirectFactory;
-    private TagRepository $tagRepository;
+    private TagRepositoryInterface $tagRepository;
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
-     * @param \Umanskiy\Blog\Model\TagRepository $tagRepository
+     * @param \Umanskiy\Blog\Api\TagRepositoryInterface $tagRepository
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
-    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, TagRepository $tagRepository, ManagerInterface $messageManager)
+    public function __construct(Context $context, RedirectFactory $resultRedirectFactory, TagRepositoryInterface $tagRepository, ManagerInterface $messageManager)
     {
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->tagRepository = $tagRepository;
