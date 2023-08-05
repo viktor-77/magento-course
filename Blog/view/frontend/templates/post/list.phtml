@@ -1,0 +1,40 @@
+<?php
+/** @var \Umanskiy\Blog\Block\PostList $block */
+
+?>
+
+<?php foreach ($block->getCollection() as $post): ?>
+
+    <p>
+        <b>ThumbNail:</b>
+        <span><?= $block->escapeHtml($post->getThumbnail()) ?></span>
+    </p>
+
+    <p>
+        <b>Title:</b>
+        <span><?= $block->escapeHtml($post->getTitle()) ?></span>
+    </p>
+
+    <p>
+        <b>ShortText:</b>
+        <span><?= $block->escapeHtml($post->getShortText()) ?></span>
+    </p>
+
+    <p>
+        <b>Created at::</b>
+        <span><?= $block->escapeHtml($post->getCreatedAt()) ?></span>
+    </p>
+
+    <p>
+        <b>Modified at:</b>
+        <span><?= $block->escapeHtml($post->getModifiedAT()) ?></span>
+    </p>
+    <hr/>
+<?php endforeach; ?>
+
+<?php if ($block->getPagerHtml()): ?>
+    <div class="order-products-toolbar toolbar bottom">
+        <?= $block->getPagerHtml() ?>
+    </div>
+<?php endif; ?>
+

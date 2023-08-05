@@ -1,0 +1,17 @@
+<?php
+/** @var \Umanskiy\Blog\Block\TagList $block */
+
+?>
+
+<?php foreach ($block->getCollection() as $tag): ?>
+    <h3>
+        <span><?= $block->escapeHtml($tag->getName()) ?></span>
+    </h3>
+    <hr/>
+<?php endforeach; ?>
+
+<?php if ($block->getPagerHtml()): ?>
+    <div class="order-products-toolbar toolbar bottom">
+        <?= $block->getPagerHtml() ?>
+    </div>
+<?php endif; ?>
